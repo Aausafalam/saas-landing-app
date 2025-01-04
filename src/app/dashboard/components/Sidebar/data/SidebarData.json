@@ -1,0 +1,175 @@
+[
+    {
+        "name": "dashboard",
+        "link": "/dashboard",
+        "icon": "grid",
+        "activeIcon": "grid",
+        "permission": ["admin", "employee", "reporting officer", "auditor"],
+        "className": "dashboard_menu_item"
+    },
+    {
+        "name": "organization",
+        "link": "/user",
+        "icon": "database",
+        "activeIcon": "database",
+        "permission": ["admin", "employee", "reporting officer", "auditor"]
+    },
+    {
+        "name": "Employees",
+        "link": "/employeeform/2",
+        "icon": "users",
+        "activeIcon": "users",
+        "permission": ["admin", "auditor"]
+    },
+    {
+        "name": "Leave Management",
+        "icon": "archive",
+        "activeIcon": "archive",
+        "permission": ["admin", "employee", "reporting officer", "auditor"],
+        "child": [
+            {
+                "name": "Holiday List",
+                "link": "/holidaylist",
+                "permission": ["admin", "employee", "reporting officer", "auditor"]
+            },
+            {
+                "name": "Employee Leave Sheet",
+                "icon": "",
+                "link": "/employeeleavecount",
+                "permission": ["admin", "auditor"]
+            },
+            {
+                "name": "Leave Applications",
+                "icon": "",
+                "link": "/leaveapp",
+                "permission": ["employee", "reporting officer"]
+            },
+            {
+                "name": "Employee Applications",
+                "icon": "",
+                "link": "/employeeapplication",
+                "permission": ["admin", "auditor", "reporting officer"],
+                "paths": ["/employeeapplication", "/employeeapplication?wfhhrapproval=1"]
+            },
+            {
+                "name": "Add Leave Application",
+                "icon": "",
+                "link": "/leaveappadminside",
+                "permission": ["admin"]
+            },
+            {
+                "name": "Report",
+                "icon": "",
+                "link": "/report",
+                "permission": ["admin", "auditor"]
+            }
+        ]
+    },
+    {
+        "name": "Project Management",
+        "icon": "command",
+        "activeIcon": "command",
+        "permission": ["admin", "employee", "reporting officer", "auditor"],
+        "child": [
+            {
+                "name": "Your Travel Request",
+                "link": "/fieldvisit",
+                "icon": "",
+                "activeIcon": "",
+                "permission": ["employee", "reporting officer"]
+            },
+            {
+                "name": "Team Travel Request",
+                "link": "/teamrequesttravel",
+                "icon": "",
+                "activeIcon": "",
+                "permission": ["admin", "reporting officer", "auditor"]
+            },
+            {
+                "name": "Employee Travel Request",
+                "link": "/teamrequesttravel/finance",
+                "icon": "",
+                "activeIcon": "",
+                "permission": ["admin", "auditor", "reporting officer", "employee"]
+            },
+            {
+                "name": "Generate Travel Report",
+                "icon": "",
+                "link": "/generatetravelreport",
+                "permission": ["admin", "auditor"]
+            },
+            {
+                "name": "Team Level Mapping",
+                "icon": "",
+                "link": "/teamlevelmapping",
+                "permission": ["admin", "auditor"]
+            },
+            {
+                "name": "Projects",
+                "icon": "",
+                "link": "/project",
+                "permission": ["admin", "auditor", "reporting officer", "employee"]
+            },
+            {
+                "name": "Tasks",
+                "icon": "",
+                "link": "/tasks",
+                "permission": ["admin", "auditor", "reporting officer", "employee"]
+            }
+        ]
+    },
+    {
+        "name": "Attendance",
+        "icon": "globe",
+        "activeIcon": "globe",
+        "permission": ["admin", "employee", "reporting officer", "auditor"],
+        "child": [
+            {
+                "name": "Your Attendance",
+                "link": "/attendance",
+                "icon": "",
+                "activeIcon": "",
+                "permission": ["admin", "employee", "reporting officer", "auditor"]
+            },
+            {
+                "name": "Reportees Attendance",
+                "icon": "",
+                "link": "/attendancelist",
+                "permission": ["reporting officer"]
+            },
+            {
+                "name": "Employees Attendance",
+                "icon": "",
+                "link": "/attendancelist",
+                "permission": ["admin", "auditor"]
+            },
+            {
+                "name": "Monthly Summary",
+                "icon": "",
+                "link": "/monthlysummary",
+                "permission": ["admin", "auditor"]
+            },
+            {
+                "name": "Upload Attendance",
+                "link": "/uploadattendance",
+                "icon": "",
+                "activeIcon": "",
+                "permission": ["admin"]
+            }
+        ]
+    },
+    {
+        "name": "Notice",
+        "link": "/notice",
+        "icon": "bell",
+        "activeIcon": "bell",
+        "permission": ["admin", "auditor", "reporting officer", "employee"]
+    },
+    {
+        "name": "Policy",
+        "link": "/policy",
+        "icon": "layers",
+        "activeIcon": "layers",
+        "permission": ["admin", "auditor", "reporting officer", "employee"]
+    }
+]

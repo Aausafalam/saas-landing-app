@@ -1,0 +1,27 @@
+.editor {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    /* font-size: 0.95rem; */
+}
+.editor svg {
+    width: 18.5px;
+    height: 18.5px;
+    color: #ff8e06;
+}
+.billing {
+    color: rgb(47, 43, 61, 0.7);
+}
+.status {
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.3rem;
+    font-size: 13px;
+}
+.status.Active {
+    background-color: #dcf9e7;
+    color: rgb(40, 199, 111);
+}
+.status.Inactive {
+    background-color: #eaebed;
+    color: rgb(128, 131, 144);
+}
