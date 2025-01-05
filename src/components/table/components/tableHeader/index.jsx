@@ -61,7 +61,7 @@ const TableHeader = ({ data, setCheckboxState, checkboxState, initialValues, rou
         <thead className={styles.container}>
             <tr>
                 {data.checkbox && (
-                    <th>
+                    <th className={styles.checkbox_cell}>
                         <CheckBoxField
                             formField={{
                                 id: `header${initialValues.page || "1"}`,

@@ -6,7 +6,10 @@
     font-size: 0.93rem;
     letter-spacing: 0.2px;
     font-weight: 400;
-    padding-block: 0.4rem;
+    padding-block: 0.23rem;
+}
+.checkbox_cell {
+    padding-left: 1rem;
 }
 .action_cell > div {
     display: flex;

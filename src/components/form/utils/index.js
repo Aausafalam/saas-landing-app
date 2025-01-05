@@ -17,7 +17,6 @@ class FormUtils {
             min: this.normalizeRule(validationRules.min, (value) => `Minimum value is ${value}`),
             max: this.normalizeRule(validationRules.max, (value) => `Maximum value is ${value}`),
         };
-        console.log(rules.required);
         // Required check
         if (rules.required?.value && (!valueToValidate || valueToValidate?.length === 0)) {
             return rules.required.message;

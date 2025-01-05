@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./index.module.css";
 import NameAvatar from "../NameAvatar";
-import Utils from "@/utils";
+import Utils from "@/lib/utils";
 
 const UserAvatar = ({ userDetails }) => {
     const [showImage, setShowImage] = useState(false);

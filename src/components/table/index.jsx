@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import styles from "./styles/index.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import DataNotFound from "../DataNotFound";
-import apiClient from "@/api/config";
+import apiClient from "@/services/api/config";
 import "./styles/index.css";
 import "./styles/root.css";
 import TableFilter from "./components/filters";

@@ -80,32 +80,40 @@ const TableRow = ({ data, setCheckboxState, checkboxState, onRowClick, onActionC
         [customCellRenderer]
     );
 
-    // Render action buttons
     const ActionButtons = useCallback(
         ({ actions, row }) => {
             const visibleActions = getVisibleActions(actions, row);
 
             if (!visibleActions.length) return null;
 
+            // Split the array into two parts
+            const primaryActions = visibleActions.slice(0, 2); // First two items
+            const dropdownActions = visibleActions.slice(2); // Remaining items
+
             return (
                 <div>
-                    {visibleActions.map((action, index) => (
+                    {/* Render the first two actions directly */}
+                    {primaryActions.map((action, index) => (
                         <p key={`${action.name}-${index}`} className={styles.action_icon} onClick={(e) => handleActionClick(action, row, e)} title={action.label}>
                             {ICON[action.name.toUpperCase()]}
                         </p>
                     ))}
-                    <Dropdown
-                        trigger={
-                            <p className={styles.action_icon}>
-                                <span>{ICON.FILL_VERTICAL_MENU}</span>
-                            </p>
-                        }
-                        content={visibleActions.map((action, index) => (
-                            <p key={`dropdown-${action.name}-${index}`} onClick={(e) => handleActionClick(action, row, e)} className={styles.action_icon} title={action.label}>
-                                {ICON[action.name.toUpperCase()]} {action.label}
-                            </p>
-                        ))}
-                    />
+
+                    {/* Render the rest in the Dropdown */}
+                    {dropdownActions.length > 0 && (
+                        <Dropdown
+                            trigger={
+                                <p className={styles.action_icon}>
+                                    <span>{ICON.FILL_VERTICAL_MENU}</span>
+                                </p>
+                            }
+                            content={dropdownActions.map((action, index) => (
+                                <p key={`dropdown-${action.name}-${index}`} onClick={(e) => handleActionClick(action, row, e)} className={styles.action_icon} title={action.label}>
+                                    {ICON[action.name.toUpperCase()]} {action.label}
+                                </p>
+                            ))}
+                        />
+                    )}
                 </div>
             );
         },
@@ -137,7 +145,7 @@ const TableRow = ({ data, setCheckboxState, checkboxState, onRowClick, onActionC
             {data.rows.map((row, rowIndex) => (
                 <tr key={row.Id?.value || rowIndex} onClick={() => handleRowClick(row)} style={{ cursor: data.rowClickHandler ? "pointer" : "" }}>
                     {data.checkbox && (
-                        <td onClick={(e) => e.stopPropagation()}>
+                        <td className={styles.checkbox_cell} onClick={(e) => e.stopPropagation()}>
                             <CheckBoxField
                                 formField={{
                                     id: `row${initialValues.page || "1"}${rowIndex + 1}`,

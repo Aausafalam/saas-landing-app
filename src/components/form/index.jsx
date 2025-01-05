@@ -42,13 +42,14 @@ const DynamicForm = ({ formData, onSubmit, formButtons, formId = "main" }) => {
 
     const { isDragging, handleFileDelete, handleDragOver, handleDragLeave, handleDrop } = useFileUploadHandler(handleInputChange, setGroupPreviewUrls, previewUrl, setPreviewUrl, setFormValues);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if (onSubmit && !formButtons?.[0]?.loading && validateFieldsOnSubmit()) {
-            onSubmit(formValues);
+        if (onSubmit && !formButtons?.[0]?.loading && (await validateFieldsOnSubmit())) {
+             onSubmit(formValues);
         }
     };
-    console.log(errors);
+    console.log(formValues);
+    // console.log(errors);
     const getGridClass = (gridValue) => {
         const gridClasses = {
             1: styles.col1,
@@ -63,7 +64,7 @@ const DynamicForm = ({ formData, onSubmit, formButtons, formId = "main" }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} id={`form-${formId}`}>
+        <form className={styles.form_container} onSubmit={handleSubmit} id={`form-${formId}`}>
             <div className={`${styles.row} ${styles.container}`}>
                 {formData.map((field, index) => {
                     return (

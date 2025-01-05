@@ -314,7 +314,7 @@ export const useFormHandler = (formData, validate = null) => {
         }
 
         setErrors(errors);
-        return Object.keys(errors).length === 0; // Return true if no errors, false otherwise.
+        return Object.keys(errors).length === 0;
     };
 
     return {
