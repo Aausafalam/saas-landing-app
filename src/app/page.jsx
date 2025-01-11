@@ -2,14 +2,24 @@
 
 import DynamicForm from "@/components/form";
 import { ICON } from "@/components/form/utils/icons";
+import Wizard from "@/components/Wizard";
 import { useUser } from "@/services/context/user";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import styles from "./page.module.css";
+import GlobalICONS from "@/lib/utils/icons";
 
 export default function Home() {
     const [loading, setLoading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { fetchUserList, userList } = useUser();
+
+    const [activeWizardStep, setActiveWizardStep] = useState(1);
+
+    const handleWizardChange = (step) => {
+        setActiveWizardStep(step);
+    };
+
     useEffect(() => {
         fetchUserList();
     }, []);
@@ -585,20 +595,23 @@ export default function Home() {
 
     const formButtons = [
         {
-            label: "Cancel",
+            label: "Previous",
             onClick: () => {
                 console.log("first");
             },
-            variant: "danger",
-            outlined: true,
+            variant: "secondary",
+            flat: true,
+            icon: GlobalICONS.LEFT_ARROW,
+            disabled: true,
+            buttonContainerClassName: styles.previous_button_container,
         },
         {
-            label: isSubmitting ? "Submitting..." : "Save", // Update label
+            label: isSubmitting ? "Submitting..." : "Next", // Update label
             type: "Submit",
             loading: loading,
-            variant: "success",
-            //icon: isSubmitting ? ICON.LOADING : ICON.CHECK_MARK, // Use a loader icon
-            disabled: isSubmitting, // Disable
+            disabled: isSubmitting,
+            icon: GlobalICONS.NEXT_ARROW,
+            iconPosition: "right",
         },
     ];
 
@@ -607,8 +620,7 @@ export default function Home() {
     };
     return (
         <div className="card">
-            {" "}
-            <DynamicForm formData={formData} formButtons={formButtons} onSubmit={handleSubmit} />
+            <Wizard activeWizardStep={activeWizardStep} handleWizardChange={handleWizardChange} form={<DynamicForm formData={formData} formButtons={formButtons} onSubmit={handleSubmit} />} />
         </div>
     );
 }

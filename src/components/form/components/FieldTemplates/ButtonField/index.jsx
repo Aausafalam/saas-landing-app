@@ -34,6 +34,7 @@ const Button = React.forwardRef(
             value,
             ariaLabel,
             tooltip,
+            buttonContainerClassName,
             ...props
         },
         ref
@@ -103,7 +104,7 @@ const Button = React.forwardRef(
         );
 
         return (
-            <div className={`${styles.buttonWrapper} ${fullWidth ? styles.fullWidth : ""}`} {...(tooltip && { "data-tooltip": tooltip })}>
+            <div className={`${styles.buttonWrapper} ${fullWidth ? styles.fullWidth : ""} ${buttonContainerClassName}`} {...(tooltip && { "data-tooltip": tooltip })}>
                 <Comp
                     ref={ref}
                     className={computeClassName()}

@@ -23,6 +23,9 @@ const ButtonGroup = ({ buttons, style = null }) => {
                         type={button.type || "button"}
                         className={`${button.className}`}
                         onClick={button.onClick}
+                        iconPosition={button.iconPosition}
+                        disabled={button.disabled}
+                        buttonContainerClassName={button.buttonContainerClassName}
                     >
                         <span>{button.label}</span>
                     </Button>
