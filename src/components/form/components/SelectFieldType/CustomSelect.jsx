@@ -112,6 +112,12 @@ const getStyles = (style, error) => {
             color: "white",
             fontSize: "var(--input-font-size)", // Add font size
         }),
+        placeholder: (provided) => ({
+            ...provided,
+            color: "var(--placeholder-color)",
+            fontWeight: "var(--placeholder-font-weight)",
+            fontSize: "var(--placeholder-font-size)",
+        }),
         ...style,
     };
 

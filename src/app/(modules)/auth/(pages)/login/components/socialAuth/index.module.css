@@ -1,7 +1,19 @@
 .socialLogin {
     @apply flex justify-center gap-6;
 }
-
 .socialButton {
-    @apply p-2 rounded-lg hover:bg-[#F8F8F8] transition-all duration-300 ease-in-out;
+    width: 100%;
+    border: 1px solid rgb(241, 239, 239);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.65rem;
+    border-radius: 0.3rem;
+    font-size: 0.89rem;
+    font-weight: 500;
+}
+.socialButton svg {
+    width: 20px;
+    height: 20px;
 }

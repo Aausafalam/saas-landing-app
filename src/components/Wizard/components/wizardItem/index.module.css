@@ -3,6 +3,7 @@
     align-items: center;
     gap: 0.75rem;
     cursor: pointer;
+    white-space: nowrap;
 }
 .wizardStep__number {
     align-items: center;

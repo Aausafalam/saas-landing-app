@@ -1,0 +1,11 @@
+.verified_icon {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.verified_icon svg {
+    width: 100px;
+    height: 100px;
+    color: var(--primary-color);
+}

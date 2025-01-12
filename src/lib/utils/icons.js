@@ -465,9 +465,9 @@ const GlobalICONS = {
         </svg>
     ),
     ARROW_RIGHT: (
-        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="24" height="24" fill="none" />
-            <path d="M9.5 7L14.5 12L9.5 17" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.5 7L14.5 12L9.5 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
     ),
     CIRCLE: (
@@ -605,6 +605,27 @@ const GlobalICONS = {
     NEXT_ARROW: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14m-6 6l6-6m-6-6l6 6" />
+        </svg>
+    ),
+    LOADER: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <rect width="2" height="5" x="11" y="1" fill="currentColor" opacity="0.14" />
+                <rect width="2" height="5" x="11" y="1" fill="currentColor" opacity="0.29" transform="rotate(30 12 12)" />
+                <rect width="2" height="5" x="11" y="1" fill="currentColor" opacity="0.43" transform="rotate(60 12 12)" />
+                <rect width="2" height="5" x="11" y="1" fill="currentColor" opacity="0.57" transform="rotate(90 12 12)" />
+                <rect width="2" height="5" x="11" y="1" fill="currentColor" opacity="0.71" transform="rotate(120 12 12)" />
+                <rect width="2" height="5" x="11" y="1" fill="currentColor" opacity="0.86" transform="rotate(150 12 12)" />
+                <rect width="2" height="5" x="11" y="1" fill="currentColor" transform="rotate(180 12 12)" />
+                <animateTransform
+                    attributeName="transform"
+                    calcMode="discrete"
+                    dur="0.75s"
+                    repeatCount="indefinite"
+                    type="rotate"
+                    values="0 12 12;30 12 12;60 12 12;90 12 12;120 12 12;150 12 12;180 12 12;210 12 12;240 12 12;270 12 12;300 12 12;330 12 12;360 12 12"
+                />
+            </g>
         </svg>
     ),
 };

@@ -26,6 +26,7 @@ const ButtonGroup = ({ buttons, style = null }) => {
                         iconPosition={button.iconPosition}
                         disabled={button.disabled}
                         buttonContainerClassName={button.buttonContainerClassName}
+                        loading={button.loading}
                     >
                         <span>{button.label}</span>
                     </Button>

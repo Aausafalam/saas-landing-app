@@ -2,6 +2,8 @@
 import React from "react";
 import styles from "./index.module.css";
 import "./root.css";
+import { Loader } from "lucide-react";
+import GlobalICONS from "@/lib/utils/icons";
 
 const Button = React.forwardRef(
     (
@@ -91,11 +93,7 @@ const Button = React.forwardRef(
 
         const content = (
             <>
-                {loading && (
-                    <span className={styles.loader}>
-                        <Loader size={16} className={styles.loaderIcon} />
-                    </span>
-                )}
+                {loading && <span className={styles.loader}>{GlobalICONS.LOADER}</span>}
                 {icon && iconPosition === "left" && !loading && <span className={styles.iconLeft}>{icon}</span>}
                 {!iconOnly && <span className={styles.children}>{children}</span>}
                 {icon && iconPosition === "right" && !loading && <span className={styles.iconRight}>{icon}</span>}
