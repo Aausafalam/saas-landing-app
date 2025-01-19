@@ -16,7 +16,8 @@ export const useFormHandler = (formData, validate = null) => {
 
     useEffect(() => {
         if (!formData) return;
-
+        setFormValues({});
+        setErrors({});
         // Initialize dynamic groups for fields that have group configurations
         const initialDynamicGroups = formData.reduce((acc, field) => {
             if (field.groupFields) {

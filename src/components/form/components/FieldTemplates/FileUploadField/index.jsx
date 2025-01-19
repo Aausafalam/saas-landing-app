@@ -13,6 +13,8 @@ import FilePondPluginImageCrop from "filepond-plugin-image-crop";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import styles from "./index.module.css";
+import { useFileUpload } from "@/services/hooks/fileUpload";
+import apiConstants from "@/services/utils/constants";
 
 // Register all plugins
 registerPlugin(
@@ -25,13 +27,15 @@ registerPlugin(
     FilePondPluginImageCrop,
     FilePondPluginImageTransform
 );
+
 const fileTypeMapping = {
     image: "image/*",
     pdf: "application/pdf",
     doc: "application/msword",
     docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 };
-const FileUploadField = ({ formField, groupPreviewUrls, previewUrl, errors }) => {
+
+const FileUploadField = ({ formField, errors }) => {
     const {
         id,
         name,
@@ -57,6 +61,8 @@ const FileUploadField = ({ formField, groupPreviewUrls, previewUrl, errors }) =>
         imageResizeTargetHeight = 800,
         imageResizeMode = "cover",
         imageQuality = 90,
+        url,
+        defaultValue,
     } = formField;
 
     const [files, setFiles] = useState([]);
@@ -64,6 +70,43 @@ const FileUploadField = ({ formField, groupPreviewUrls, previewUrl, errors }) =>
     const [touched, setTouched] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const pondRef = useRef(null);
+    const isRemovingRef = useRef(false);
+    const isProcessingRef = useRef(false);
+    const initialLoadRef = useRef(true);
+
+    const processDefaultValue = useCallback((value) => {
+        if (!value) return null;
+
+        const baseUrl = apiConstants.BACKEND_API_BASE_URL;
+        const fileUrl = `${baseUrl}/Institutes/${value.path}`;
+
+        return {
+            source: fileUrl,
+            options: {
+                type: "local",
+                metadata: {
+                    isDefault: true, // Add flag to identify default files
+                    poster: value.mimetype.startsWith("image/") ? fileUrl : null,
+                },
+                file: {
+                    name: value.originalName,
+                    size: value.size,
+                    type: value.mimetype,
+                },
+            },
+        };
+    }, []);
+
+    // Handle default value
+    useEffect(() => {
+        if (defaultValue && initialLoadRef.current) {
+            const processedFile = processDefaultValue(defaultValue);
+            if (processedFile) {
+                setFiles([processedFile]);
+                initialLoadRef.current = false; // Mark initial load as complete
+            }
+        }
+    }, [defaultValue, processDefaultValue]);
 
     const handleValidation = useCallback(() => {
         if (required && files.length === 0 && touched) {
@@ -78,62 +121,116 @@ const FileUploadField = ({ formField, groupPreviewUrls, previewUrl, errors }) =>
         handleValidation();
     }, [files, touched, handleValidation]);
 
-    const handleProcessFile = useCallback(
-        async (error, file) => {
+    useEffect(() => {
+        if (errors?.[name]) {
+            setError(errors[name]);
             setTouched(true);
-            if (error) {
-                setError(error.message);
-                return;
-            }
+        }
+    }, [errors, name]);
 
-            setIsUploading(true);
-            try {
-                const processedFile = {
-                    id: file.id,
-                    fileName: file.filename,
-                    fileSize: file.fileSize,
-                    fileType: file.fileType,
-                    file: file.file,
-                    fileLink: URL.createObjectURL(file.file),
-                };
+    const { fileUpload } = useFileUpload();
 
-                setFiles((prevFiles) => {
-                    const updatedFiles = multiple ? [...prevFiles, processedFile] : [processedFile];
-                    // onChange?.(multiple ? updatedFiles : updatedFiles[0], groupIndex, fieldName);
-                    return updatedFiles;
-                });
+    const handleUpload = async (file) => {
+        if (!file?.file || isProcessingRef.current) return;
 
-                setError("");
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setIsUploading(false);
-            }
-        },
-        [multiple, onChange, groupIndex, fieldName]
-    );
+        try {
+            isProcessingRef.current = true;
+            await fileUpload.execute({
+                url: url || "/owners/documents/identity-proof/upload",
+                payload: {
+                    [name]: file.file,
+                },
+                options: {
+                    showNotification: true,
+                    onProgress: (percentage) => {
+                        console.log(`Upload progress: ${percentage}%`);
+                    },
+                },
+                onSuccess: (data) => {
+                    console.log("Upload successful:", data);
+                    onChange({
+                        target: {
+                            value: {
+                                fileId: data.fileId,
+                            },
+                            name,
+                        },
+                    });
+                },
+                onError: (error) => {
+                    console.error("Upload failed:", error);
+                    setError("Upload failed: " + (error.message || "Unknown error"));
+                },
+            });
+        } catch (error) {
+            console.error("Upload error:", error);
+            setError("Upload failed: " + (error.message || "Unknown error"));
+        } finally {
+            isProcessingRef.current = false;
+        }
+    };
 
-    const handleRemoveFile = useCallback(
-        (error, file) => {
+    const handleProcessFile = async (error, file) => {
+        if (isRemovingRef.current || isProcessingRef.current) {
+            return;
+        }
+
+        setTouched(true);
+        if (error) {
+            setError(error.message);
+            return;
+        }
+
+        try {
+            const processedFile = {
+                source: file.file,
+                options: {
+                    type: "local",
+                },
+            };
+
             setFiles((prevFiles) => {
-                const updatedFiles = prevFiles.filter((f) => f.id !== file.id);
-                //  onChange?.(multiple ? updatedFiles : updatedFiles[0] || null, groupIndex, fieldName);
+                const updatedFiles = multiple ? [...prevFiles, processedFile] : [processedFile];
+                if (!file.getMetadata("isDefault")) {
+                    handleUpload(file);
+                }
                 return updatedFiles;
             });
-        },
-        [multiple, onChange, groupIndex, fieldName]
-    );
 
+            setError("");
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+    const handleRemoveFile = (error, file) => {
+        isRemovingRef.current = true;
+        setFiles((prevFiles) => {
+            console.log(prevFiles);
+            return prevFiles.filter((f) => f.source.name !== file.filename);
+        });
+
+        onChange({
+            target: {
+                value: null,
+                name,
+            },
+        });
+
+        if (file.source instanceof File) {
+            URL.revokeObjectURL(URL.createObjectURL(file.source));
+        }
+
+        isRemovingRef.current = false;
+    };
     useEffect(() => {
         return () => {
             files.forEach((file) => {
-                if (file.fileLink) {
-                    URL.revokeObjectURL(file.fileLink);
+                if (file.source instanceof File) {
+                    URL.revokeObjectURL(URL.createObjectURL(file.source));
                 }
             });
         };
     }, [files]);
-    // console.log(accept);
 
     return (
         <div className={styles.fileUploadContainer} style={style}>
@@ -154,12 +251,7 @@ const FileUploadField = ({ formField, groupPreviewUrls, previewUrl, errors }) =>
                 maxFiles={maxFiles}
                 acceptedFileTypes={accept.map((type) => fileTypeMapping[type.trim()])}
                 maxFileSize={maxFileSize}
-                files={files.map((file) => ({
-                    source: file.file,
-                    options: {
-                        type: "local",
-                    },
-                }))}
+                files={files}
                 onaddfile={handleProcessFile}
                 onremovefile={handleRemoveFile}
                 allowFileEncode={true}
@@ -177,30 +269,25 @@ const FileUploadField = ({ formField, groupPreviewUrls, previewUrl, errors }) =>
                         ${
                             !disabled
                                 ? `
-                                    <div
-                                      
-                                    >
-                                        <span class="${styles.upload__icon}"> <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path
-                d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-            />
-        </svg></span>
-                                    </div>
-                                `
+                            <div>
+                                <span class="${styles.upload__icon}">
+                                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        `
                                 : ""
                         }
                         ${
                             !disabled
                                 ? `
-                                    <div class="${styles.drag__text}">
-                                        <p>Drag & drop files here or click to browse</p>
-                                        <p class="text-primary">Support for images, documents and other files up to 1MB each</p>
-                                    </div>
-                                `
+                            <div class="${styles.drag__text}">
+                                <p>Drag & drop files here or click to browse</p>
+                                <p class="text-primary">Support for images, documents and other files up to 1MB each</p>
+                            </div>
+                        `
                                 : ""
                         }
                         ${required && touched && files.length === 0 ? `<span class="${styles.error}">This field is required</span>` : ""}
@@ -210,26 +297,6 @@ const FileUploadField = ({ formField, groupPreviewUrls, previewUrl, errors }) =>
             />
 
             {error && <div className={styles.errorMessage}>{error}</div>}
-
-            {files.length > 0 && (
-                <div className={styles.fileList}>
-                    {files.map((file) => (
-                        <div key={file.id} className={styles.fileItem}>
-                            <div className={styles.fileInfo}>
-                                <span className={styles.fileName}>{file.fileName}</span>
-                                <span className={styles.fileSize}>({(file.fileSize / 1024).toFixed(2)} KB)</span>
-                            </div>
-                            <div className={styles.fileActions}>
-                                {viewFile && (
-                                    <a href={file.fileLink} target="_blank" rel="noopener noreferrer" className={styles.viewButton}>
-                                        View
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
         </div>
     );
 };

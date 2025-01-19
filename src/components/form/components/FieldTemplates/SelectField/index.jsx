@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
-import CustomSelect from "../../SelectFieldType/CustomSelect";
+import CustomSelect from "../../SelectFieldType/Select";
 import "../../../styles/root.css";
 import FormUtils from "@/components/form/utils";
 

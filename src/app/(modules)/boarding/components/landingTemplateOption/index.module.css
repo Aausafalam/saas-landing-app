@@ -1,0 +1,28 @@
+.container {
+    padding: 1rem;
+    max-width: 350px;
+}
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.heading h2 {
+    font-weight: 500;
+    line-height: 25px;
+    color: #323243ff;
+    font-size: 0.95rem;
+}
+.thumbnail {
+    margin-top: 0.8rem;
+}
+.thumbnail img {
+    border-radius: 6px 6px 6px 6px;
+    /* box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.08); */
+    box-shadow: rgba(47, 43, 61, 0.14) 0px 3px 12px, rgba(0, 0, 0, 0) 0px 0px, rgba(0, 0, 0, 0) 0px 0px;
+}
+.heading button {
+    padding-block: 0.45rem;
+    padding-inline: 0.8rem;
+}

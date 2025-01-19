@@ -1,6 +1,8 @@
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import ContextProviders from "@/services/context";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const publicSans = Public_Sans({
     subsets: ["latin"],
@@ -18,7 +20,10 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <ContextProviders>
-                <body className={`${publicSans.variable}`}>{children}</body>
+                <body className={`${publicSans.variable}`}>
+                    <ToastContainer />
+                    {children}
+                </body>
             </ContextProviders>
         </html>
     );

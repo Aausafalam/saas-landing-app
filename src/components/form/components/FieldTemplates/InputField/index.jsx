@@ -57,7 +57,7 @@ const InputField = ({ formField, formValues, maskedValues, errors, ...restProps 
     } = formField;
     // console.log(autoSuggestion);
     // Internal state
-    const [inputValue, setInputValue] = useState(groupFieldDefaultValue || maskedValues?.[name] || defaultValue || value || "");
+    const [inputValue, setInputValue] = useState(groupFieldDefaultValue || maskedValues?.[name] || value || "");
     const [error, setError] = useState("");
     const [touched, setTouched] = useState(false);
 
@@ -100,6 +100,10 @@ const InputField = ({ formField, formValues, maskedValues, errors, ...restProps 
             setTouched(true);
         }
     }, [errors?.[name]]);
+
+    useEffect(() => {
+        setInputValue(defaultValue);
+    }, [defaultValue]);
 
     // Fetch suggestions
     const fetchSuggestions = async (searchText) => {

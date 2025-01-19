@@ -1,0 +1,10 @@
+.theme_options {
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+    padding-inline: 2.5rem;
+}
+.theme_options svg {
+    width: 30px;
+    height: 30px;
+    color: rgb(47, 43, 61, 0.9);
+}

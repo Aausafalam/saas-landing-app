@@ -1,6 +1,14 @@
-const { UserProvider } = require("./user");
+import { NotificationProvider } from "./notification";
+import { InstituteProvider } from "./institute";
+import { LoadingProvider } from "./loading";
 
 const ContextProviders = ({ children }) => {
-    return <UserProvider>{children}</UserProvider>;
+    return (
+        <LoadingProvider>
+            <NotificationProvider>
+                <InstituteProvider>{children}</InstituteProvider>
+            </NotificationProvider>
+        </LoadingProvider>
+    );
 };
 export default ContextProviders;

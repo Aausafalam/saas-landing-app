@@ -87,6 +87,14 @@ class FormUtils {
             message: defaultMessage,
         };
     };
+
+    static transformErrors = (errors = []) => {
+        return errors.reduce((acc, { message, path }) => {
+            const key = path[0];
+            acc[key] = message;
+            return acc;
+        }, {});
+    };
 }
 
 export default FormUtils;

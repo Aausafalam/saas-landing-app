@@ -72,10 +72,10 @@ const Home = () => {
                         </Link>
                     </nav>
                     <div className="flex items-center space-x-4">
-                        <Button flat={true} outlined={true}>
+                        <Button href="/institute/login" flat={true} variant="dark" outlined={true}>
                             Sign In
                         </Button>
-                        <Button flat={true} className="hidden md:inline-flex">
+                        <Button href="/institute/login" variant="dark" className="hidden md:inline-flex">
                             Get Started
                         </Button>
                         <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -98,7 +98,9 @@ const Home = () => {
                             <Link href="#pricing" className="hover:text-blue-600 transition-colors" onClick={() => setIsMenuOpen(false)}>
                                 Pricing
                             </Link>
-                            <Button className="w-full">Get Started</Button>
+                            <Button href="/institute/login" variant="dark" className="w-full">
+                                Get Started
+                            </Button>
                         </nav>
                     </motion.div>
                 )}
@@ -120,10 +122,10 @@ const Home = () => {
                             Streamline your educational experience with our cutting-edge LMS platform. Engage, learn, and grow like never before.
                         </motion.p>
                         <motion.div className="flex" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.8 }}>
-                            <Button flat={true} size="lg" className="mr-4">
+                            <Button href="/institute/login" variant="dark" flat={true} size="lg" className="mr-4">
                                 Get Started
                             </Button>
-                            <Button flat={true} outlined={true} size="lg">
+                            <Button href="/institute/login" variant="dark" flat={true} outlined={true} size="lg">
                                 Book a Demo
                             </Button>
                         </motion.div>
@@ -421,7 +423,7 @@ const Home = () => {
                                     </motion.div>
                                 ))}
                             </div>
-                            <Button size="lg" className="relative mt-8">
+                            <Button variant="dark" flat={true} size="lg" className="relative mt-8">
                                 Start Learning Now
                             </Button>
                         </div>
@@ -514,7 +516,7 @@ const Home = () => {
                                         </li>
                                     ))}
                                 </ul>
-                                <Button flat={true} outlined={index === 1 ? false : true} className="w-full">
+                                <Button href="/institute/login" variant="dark" flat={true} outlined={index === 1 ? false : true} className="w-full">
                                     {index === 2 ? "Contact Sales" : "Get Started"}
                                 </Button>
                             </motion.div>
@@ -531,7 +533,7 @@ const Home = () => {
                         <p className="text-xl mb-8">Join thousands of students and educators who are already benefiting from EduFlow s powerful learning platform.</p>
                         <form className="flex flex-col sm:flex-row gap-4 justify-center">
                             <InputField formField={{ id: "email", name: "email", placeholder: "Enter your email", type: "email" }} />
-                            <Button size="lg" flat={true}>
+                            <Button size="lg" href="/institute/login" variant="dark" flat={true}>
                                 Get Started
                             </Button>
                         </form>

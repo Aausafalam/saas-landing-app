@@ -55,7 +55,28 @@ body {
 *:hover::-webkit-scrollbar-thumb {
     background-color: rgb(219, 218, 222, 0.8);
 }
+@keyframes dots {
+    0% {
+        content: "";
+    }
+    33% {
+        content: ".";
+    }
+    66% {
+        content: "..";
+    }
+    100% {
+        content: "...";
+    }
+}
 
+.loading_dot::after {
+    content: ""; /* Default text */
+    animation: dots 1.5s steps(3, end) infinite; /* Animate through steps */
+    margin-left: 5px;
+    width: 1rem;
+    display: inline-block;
+}
 :root {
     --backgrounColor: #f8f8fa;
     --v-global-theme-primary: 115, 103, 240;
@@ -84,5 +105,8 @@ body {
     --orange-light-color: #fff0e1;
     --disabled-bg-color: #d3d3d3;
     --disabled-text-color: #a0a0a0;
-}
 
+    --theme-error: 255, 76, 81;
+    --theme-success: 40, 199, 111;
+    --theme-primary: 115, 103, 240;
+}

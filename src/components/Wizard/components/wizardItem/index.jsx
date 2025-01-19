@@ -6,7 +6,12 @@ import GlobalICONS from "@/lib/utils/icons";
 const WizardStep = (props) => {
     const { number = "1", icon = null, heading = "Account Details", subHeading = "Setup Account Details", arrowIcon = null, onChange, activeWizard = 1, lastWizardStep } = props;
     return (
-        <div onClick={() => onChange(number)} className={`${styles.wizardStep} ${activeWizard === number ? styles.activeWizardStep : ""}`} role="listitem" aria-label={`Step ${number}`}>
+        <div
+            // onClick={() => onChange(number)}
+            className={`${styles.wizardStep} ${activeWizard === number ? styles.activeWizardStep : ""}`}
+            role="listitem"
+            aria-label={`Step ${number}`}
+        >
             <div className={styles.wizardStep__number}>
                 <h5>{icon || number}</h5>
             </div>
