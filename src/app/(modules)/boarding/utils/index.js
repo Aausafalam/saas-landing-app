@@ -1,4 +1,6 @@
 import boardingConstants from "./constants";
+import GlobalICONS from "@/lib/utils/icons";
+import styles from "../styles/index.module.css";
 
 class BoardingUtils {
     static capitalizeSentence(sentence, capitalizeAll = true) {
@@ -98,10 +100,42 @@ class BoardingUtils {
             console.error("Navigation error:", error);
             return {
                 isAllowed: false,
-                redirectUrl: `${baseUrl}?wizardStep=SIGNUP`,
+                redirectUrl: `${baseUrl}?wizardStep=BASIC_DETAILS_SETUP`,
                 message: "Error occurred - redirecting to beginning",
             };
         }
+    };
+
+    static validateCurrentStep = (onboardedUser) => {
+        const userStatus = onboardedUser.data.currentOnboardingStep;
+        if (userStatus) {
+            const navigationResult = this.handleWizardNavigation(userStatus);
+            return navigationResult;
+        }
+    };
+    static getFormButtons = (isFirst = false, isLast = false, isLoading = false, currentStep, handleStepChange) =>
+        [
+            currentStep !== 1 && {
+                label: "Previous",
+                onClick: () => handleStepChange(currentStep - 1),
+                variant: "secondary",
+                flat: true,
+                outlined: true,
+                icon: GlobalICONS.LEFT_ARROW,
+                disabled: isFirst,
+                buttonContainerClassName: styles.previous_button_container,
+            },
+            {
+                label: isLast ? "Submit" : "Save & Next",
+                type: "Submit",
+                icon: !isLast ? GlobalICONS.NEXT_ARROW : undefined,
+                iconPosition: "right",
+                loading: isLoading,
+            },
+        ].filter(Boolean);
+
+    static handelNavigation = (router, route) => {
+        router.push(route);
     };
 }
 

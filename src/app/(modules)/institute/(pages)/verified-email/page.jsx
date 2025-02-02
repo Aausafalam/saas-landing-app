@@ -19,9 +19,9 @@ export default function EmailVerified() {
         router.push(path);
     };
 
-    // useEffect(() => {
-    //     onboardedUser.fetch({});
-    // }, []);
+    useEffect(() => {
+        onboardedUser.fetch({});
+    }, []);
 
     useEffect(() => {
         setIsAnimated(true);

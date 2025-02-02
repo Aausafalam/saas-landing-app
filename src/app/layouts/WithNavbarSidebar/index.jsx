@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.css";
 import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar/indes";
+import Navbar from "./components/Navbar";
 
 const LayoutWithSidebarNavbar = ({ children }) => {
     return (

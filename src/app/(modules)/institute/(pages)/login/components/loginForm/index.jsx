@@ -19,7 +19,7 @@ const LoginForm = () => {
             localStorage.setItem("institute_email", formData.email);
             await instituteSignup.execute({
                 payload: formData,
-                onSuccess: () => handleNavigation("/institute/verify-email"),
+                onSuccess: (data) => handleNavigation("/institute/verify-email"),
             });
         },
         [instituteSignup]

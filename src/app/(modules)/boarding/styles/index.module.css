@@ -1,14 +1,13 @@
-.previous_button_container button {
-    /* background-color: #eaebed !important; */
-    /* color: rgba(128, 131, 144, 1) !important; */
+.layout_container {
+    background-color: #f8f8fa;
+    width: 100%;
+    min-height: 100%;
 }
-.previous_button_container button:disabled {
-    /* background-color: #f1f2f4 !important; */
-    /* color: rgba(128, 131, 144, 0.5) !important; */
-}
+
 .previous_button_container {
     margin-right: auto;
 }
+
 .container {
     box-shadow: 0 3px 12px rgba(47, 43, 61, 0.14), 0 0 transparent, 0 0 transparent;
     background-color: white;
@@ -33,7 +32,7 @@
 }
 .choose_theme {
     padding-top: 0.9rem;
-    padding-bottom:0.9rem;
+    padding-bottom: 0.9rem;
     padding-inline: 2.5rem;
 }
 .choose_theme svg {
