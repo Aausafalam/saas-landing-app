@@ -71,7 +71,7 @@ const boardingConstants = {
     },
     TEMPLATE_OPTIONS: [
         {
-            value: "c1f9719d-e16c-4f73-989c-b36d86edb9dd",
+            value: "7868225f-8b11-4a68-9e26-89ac72e5d5fb",
             label: "Vertical Layout",
             url: "https://c3ihub.org",
             thumbnail: "https://cdn.pixinvent.com/pi-assets/vuexy/landing-page/demo-vertical-layout.png",

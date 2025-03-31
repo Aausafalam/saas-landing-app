@@ -21,7 +21,7 @@ const useThemeInfoForm = (data) => {
                 label: "LMS Landing Template",
                 grid: 1,
                 options: boardingConstants.TEMPLATE_OPTIONS.map((option) => ({ ...option, icon: <LandingTemplateOption label={option.label} url={option.url} thumbnail={option.thumbnail} /> })),
-                defaultValue: data?.templateId || "c1f9719d-e16c-4f73-989c-b36d86edb9dd",
+                defaultValue: data?.templateId || "7868225f-8b11-4a68-9e26-89ac72e5d5fb",
                 validationRules: {
                     required: true,
                 },

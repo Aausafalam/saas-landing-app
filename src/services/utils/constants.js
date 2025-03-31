@@ -1,5 +1,5 @@
 const apiConstants = {
-    BACKEND_API_BASE_URL: "http://192.168.245.220:3000/api/v1",
+    BACKEND_API_BASE_URL: "http://localhost:5000/api/v1",
     institute: {
         BASE_Route: "/institutes",
         SIGN_UP: "/owners/register",
